@@ -76,7 +76,6 @@
 			computed:{},
 			watch:{
 				turn:function (x) {
-					let count = this.fruits.length
 					for (let f in this.fruits) {
 						let run = this.fruits[f].run
 						if (run) {
@@ -84,6 +83,7 @@
 						}
 						if (this.fruits[f].pst == 12 || this.fruits[f].pst == 16) {
 							this.fruits[f].run = false
+							
 						}
 						if (this.fruits[f].pst == 10){
 							if(this.isRightArrow == 1){
@@ -101,7 +101,17 @@
 								break
 							}
 						}
-
+					}
+					let spawn = rand(0,1)
+					if(spawn == 1){
+						newfruit = rand(0,1)
+						newfruitId = 3
+						if(newfruit == 1){
+							this.fruits.push({id:newfruitId,type:11,pst:1,run:true,step:1})
+						}else{
+							this.fruits.push({id:newfruitId,type:13,pst:1,run:true,step:1})
+						}
+						newfruitId++;
 					}
 					
 					//console.log(x)

@@ -59,13 +59,12 @@
 				turn:0,
 				score:0,
 				fruits:[
-					{id:1,type:'red',pst:5,run:true,step:1},
-					{id:2,type:'yellow',pst:2,run:true,step:1},
-					{id:3,type:'yellow',pst:3,run:true,step:1},
-					{id:4,type:'red',pst:1,run:true,step:1},
+					{id:1,type:'red',pst:1,run:true,step:1},
+					{id:2,type:'yellow',pst:3,run:true,step:1},
 				]
 			},
-			methods:{},
+			methods:{
+            },
 			computed:{},
 			watch:{
 				turn:function (x) {
@@ -74,6 +73,9 @@
 						let run = this.fruits[f].run
 						if (run) {
 							this.fruits[f].pst = this.fruits[f].pst + 1
+						}
+						if (this.fruits[f].pst == 12 || this.fruits[f].pst == 16) {
+							this.fruits[f].run = false
 						}
 					}
 					//console.log(x)

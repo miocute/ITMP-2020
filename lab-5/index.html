@@ -17,8 +17,8 @@
 		:data-play="play">
 			<main>
 				<div class="box _path" 
-				v-for="i in 14" 
-				:data-pst="i"></div>
+				v-for="f in 14" 
+				:data-pst="f"></div>
 				<div class="box _toggle" data-pst="10"  :data-isrightarrow="isRightArrow"></div>
 
 				<div class="box _fruit" v-for="f in fruits" 
@@ -59,8 +59,8 @@
 				turn:0,
 				score:0,
 				fruits:[
-					{id:1,type:'red',pst:1,run:true,step:1},
-					{id:2,type:'yellow',pst:3,run:true,step:1},
+					{id:1,type:13,pst:6,run:true,step:1},
+					{id:2,type:11,pst:3,run:true,step:1},
 				]
 			},
 			methods:{
@@ -92,6 +92,16 @@
 								this.fruits[f].step = 1
 							}
 						}
+						if (this.fruits[f].pst == 11 || this.fruits[f].pst == 13) {
+							if (this.fruits[f].pst == this.fruits[f].type && this.fruits[f].run) {
+								this.score ++
+							}
+							else if (this.fruits[f].pst != this.fruits[f].type && this.fruits[f].run) {
+								this.play = false 
+								break
+							}
+						}
+
 					}
 					
 					//console.log(x)

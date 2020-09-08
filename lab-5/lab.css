@@ -67,20 +67,20 @@ div.box{
 	background-color: #333;
 }
 .box._toggle{
-	background-color: yellow;
+	background-color: pink;
 	transition: none;
 	opacity: .5;
 }
 .box._toggle[data-isrightarrow="0"]{
-	background-color: red;
+	background-color: orange;
 }
 
 
 .box._12{
-	background-color: red;
+	background-color: orange;
 }
 .box._16{
-	background-color: yellow;
+	background-color: pink;
 }
 .box._path{
 	background-color: black;
@@ -96,13 +96,13 @@ div.box{
 	transform: rotate(90deg);
 }
 .box._fruit{
-	background-color: yellow;
+	background-color: pink;
 	border-radius: 100%;
 	border: 3px solid #fffc;
 	transform: scale(.6);
 }
-.box._fruit[data-type="red"]{
-	background-color: red;
+.box._fruit[data-type="11"]{
+	background-color: orange;
 }
 
 .box[data-pst="0"]{

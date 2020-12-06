@@ -1,64 +1,63 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Lab - Multimedia Programming 2563 ITKMITL</title>
-	<link rel=stylesheet href="../src/reset.css">
-	<link rel=stylesheet href="lab.css">
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Lab - Multimedia Programming 2563 ITKMITL</title>
+    <link rel=stylesheet href="../src/reset.css">
+    <link rel=stylesheet href="lab.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet">
 </head>
+
 <body class="paper">
-	<div id="app">
-		<input type="number" v-model="n">
-		<div class="space"></div>
-		<h2>สูตรคูณแม่ {{n}}</h2>
-		<h3 v-for="i in 12"
-		>{{n}} x {{i}} = {{x(i)}}</h3>
-		
+    <div id="app">
+        <div id="firstbox">เลือกแม่สูตรคูณ: <input type="number" v-model="n"></div>
+        <div id="secondbox">เลือกจำนวนคูณ: <input type="number" v-model="row"></div>
 
+        <div class="space"></div>
+        <h3>สูตรคูณแม่ {{n}}</h3>
+        <h5>ก่อนหน้า แม่ {{berfore_n}}</h5>
+        <h3 v-for="i in r">
+            {{n}} x {{i}} = {{x(i)}}
+        </h3>
+        <h4>ผลรวม {{sum(row)}}</h4>
+    </div>
 
-	</div>
-
-<script>
-		let app = new Vue({
-			el:'#app',
-			data:{
-				n:2,
-			},
-			methods:{
-				x: function(gotit){
-					return this.n*gotit
-			}
-		},
-
-
-
-			computed: {
-				x2: function(){
-					return this.n*2
-				},
-				x3: function(){
-					return this.n*3
-				},
-				x4: function(){
-					return this.n*4
-				},
-				x5: function(){
-					return this.n*5
-				},
-				x6: function(){
-					return this.n*6
-				},
-				x7: function(){
-					return this.n*7
-				},
-				x8: function(){
-					return this.n*8
-				},
-				x9: function(){
-					return this.n*9
-				}
-			}
-		})
-	</script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                n: 2,
+                berfore_n: 1,
+                row: 12
+            },
+            methods: {
+                x: function(row) {
+                    return this.n * row
+                },
+                sum: function(row) {
+                    all_sum = 0
+                    for (var i = 1; i <= row; i++) {
+                        all_sum += (this.n * i)
+                    }
+                    return all_sum
+                }
+            },
+            computed: {
+                r: function() {
+                    return parseInt(this.row)
+                },
+            },
+            watch: {
+                n: function(a, b) {
+                    this.berfore_n = b
+                }
+            }
+        })
+    </script>
 </body>
+
 </html>

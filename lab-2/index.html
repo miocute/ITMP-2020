@@ -5,9 +5,27 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<link rel="stylesheet" type="text/css" href="lab.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div id="app">
+		<div id="about">
+			<div id="header"><h1>About</h1></div>
+			<div id="child">
+				<h3>Username: {{person.username}}</h3>
+				<h3>Name: {{person.name}}</h3>
+				<h3>Email: {{person.email}}</h3>
+				<h3>Website: {{person.website}}</h3>
+				<h3>Company: {{person.company.name}}</h3>
+			</div>
+		</div>
+		<div id="picker">
+			<div id="header"><h1>Pick Users</h1></div>
+			<div id="child">
+				<h2 v-for="u in users" :data-id="u.id" @click="viewBio(u)">- {{u.username}}</h2>
+			</div>
+		</div>
 		
 	</div>
 	
@@ -15,24 +33,58 @@
 	<script>
 		fetch('https://jsonplaceholder.typicode.com/users')
 		.then(response => response.json())
-		.then(json => {console.log(json)})
-		let app = new Vue({
-			el: '#app',
-			data: {
-				users :[],
-				person:{
-					id:0,
-					name:'..loading',
-					username:'..loading',
-					email:'..loading',
-					website:'..loading',
-					company:{
-						name : '..loading',
-					}
-				}	
-			}
+		.then(json => {
+			console.log(json)
+			app.users = json
+			app.person = json[0]
 		})
 
-	</script>
-</body>
-</html>
+		let app = new Vue({
+			el: '#app',
+			methods:{
+				viewBio: function (user) {
+					this.person = user
+				}
+			},
+			data: {
+				person:
+				{
+					"id": 1,
+					"name": "loading....",
+					"username": "loading....",
+					"email": "loading....",
+
+					"website": "loading....",
+					"company": {
+						"name": "loading....",
+						"catchPhrase": "Multi-layered client-server neural-net",
+						"bs": "harness real-time e-markets"
+				}
+			},
+				users: [
+				{
+					"id": 1,
+					"name": "loading....",
+					"username": "loading....",
+					"email": "loading....",
+
+					"website": "loading....",
+					"company": {
+						"name": "loading....",
+						"catchPhrase": "Multi-layered client-server neural-net",
+						"bs": "harness real-time e-markets"
+					}
+				}
+				]
+			}
+
+			})
+
+			/**function  viewBio(h2){
+				let id = h2.dataset.id;
+				app.person = app.users[id-1]
+				console.log(h2)
+			}**/
+		</script>
+	</body>
+	</html>

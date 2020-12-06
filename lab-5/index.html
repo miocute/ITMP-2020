@@ -10,20 +10,18 @@
 	<div id="canvas">
 		<section id="canvas_header">
 			<div>
-				คุณแยกผลไม้ได้ {{score}} ชิ้น
+				Point : {{score}}
 			</div>
 		</section>
 		<section id="canvas_main" 
 		:data-play="play">
 			<main>
 				<div class="box _path" 
-				v-for="f in 14" 
-				:data-pst="f"></div>
-				<div class="box _toggle" data-pst="10"  :data-isrightarrow="isRightArrow"></div>
-
-				<div class="box _fruit" v-for="f in fruits" 
-				:data-pst="f.pst"  :data-type="f.type"> 
-				</div>
+				v-for="i in 14" 
+				:data-pst="i"></div>
+				<div class="box _toggle" :data-pst="10" :data-isrightarrow="isRightArrow"></div> 
+				<div class="box _fruit" v-for="i in fruits"
+				:data-pst="i.pst" :data-type="i.type"></div>
 
 				<div class="box _origin"></div>
 				<div class="box _12" data-pst="12"></div>
@@ -36,7 +34,7 @@
 				Toggle
 			</div>
 			<div v-if="!play" class="btn" id="endgame">
-				Ene Game
+				End Game
 			</div>
 		</section>
 	</div>
@@ -47,14 +45,13 @@
 			return Math.floor(Math.random()*100%shift)+start
 		}
 		
-		let nextFruitID = 3
+		let fruitCount = 3
 		let isRightArrow = 1
-		let speed = 1000
 		let app = new Vue({
 			el:'#canvas',
 			data:{
 				isRightArrow: isRightArrow,
-				speed: speed,
+				speed: 1000,
 				play:true,
 				turn:0,
 				score:0,
@@ -75,33 +72,42 @@
 			},
 			computed:{},
 			watch:{
-				turn:function (x) {
-					for (let f in this.fruits) {
-						let run = this.fruits[f].run
-						if (run) {
-							this.fruits[f].pst = this.fruits[f].pst + this.fruits[f].step
-						}
-						if (this.fruits[f].pst == 12 || this.fruits[f].pst == 16) {
-							this.fruits[f].run = false
-							
-						}
-						if (this.fruits[f].pst == 10){
+				turn: function(){
+					for(let i in this.fruits){
+						//ปุ่มtoggle
+						if (this.fruits[i].pst == 10){
 							if(this.isRightArrow == 1){
-								this.fruits[f].step = 3
+								this.fruits[i].step = 3 //เดิน3step
 							}else{
-								this.fruits[f].step = 1
+								this.fruits[i].step = 1
 							}
 						}
-						if (this.fruits[f].pst == 11 || this.fruits[f].pst == 13) {
-							if (this.fruits[f].pst == this.fruits[f].type && this.fruits[f].run) {
+
+						//คิดคะแนน
+						if (this.fruits[i].pst == 11 || this.fruits[i].pst == 13) {
+							//เมื่อถูก
+							if (this.fruits[i].pst == this.fruits[i].type && this.fruits[i].run) {
 								this.score ++
 							}
-							else if (this.fruits[f].pst != this.fruits[f].type && this.fruits[f].run) {
-								this.play = false 
-								break
+							//เมื่อผิด
+							else if (this.fruits[i].pst != this.fruits[i].type && this.fruits[i].run) {
+								this.play = false //จบเกม
 							}
 						}
+
+						//หยุดเขยับเมื่อถึงจุด
+						if (this.fruits[i].pst == 12 || this.fruits[i].pst == 16) {
+							this.fruits[i].run = false
+						}
+
+						//การขยับของfruit
+						let run = this.fruits[i].run
+						if (run) {
+							this.fruits[i].pst = this.fruits[i].pst + this.fruits[i].step //ขยับตาม step
+						}
+
 					}
+					//สร้างfruitใหม่
 					let spawn = rand(0,1)
 					if(spawn == 1){
 						newfruit = rand(0,1)
@@ -113,14 +119,30 @@
 						}
 						newfruitId++;
 					}
-					
-					//console.log(x)
+					//เพิ่มความเร็วเมื่อถึงระยะหนึ่ง
+					if (app.turn>15) {
+						app.speed = 850
+					}
+					if (app.turn>30) {
+						app.speed = 650
+					}
+					if (app.turn>60) {
+						app.speed = 450
+					}
+					if (app.turn>100) {
+						app.speed = 250
+					}
 				}
 			}
 		})
-		let = playing = setInterval(function(){
-			app.turn++
-		}, speed)
+
+		//timespeed
+		setTimeout(function timespeed(){
+			if (app.play) {
+				app.turn++
+				setTimeout(timespeed, app.speed)
+			}
+		},app.speed)
 	</script>
 </body>
 </html>
